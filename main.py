@@ -22,12 +22,12 @@ from tuner_appearance_manager.timing import Timer
 from tuner_ui_parts.main_frame import MainFrame
 from tuner_ui_parts.settings_frame import SettingsFrame
 
-try:
-    from usage_monitoring import usage_monitor
-except ImportError:
-    """ Usage monitoring not possible, because the module is missing
-     (Github Version is missing the module because of private API key) """
-    usage_monitor = None
+#try:
+#    from usage_monitoring import usage_monitor
+#except ImportError:
+#    """ Usage monitoring not possible, because the module is missing
+#     (Github Version is missing the module because of private API key) """
+#    usage_monitor = None
 
 from settings import Settings
 
@@ -117,30 +117,30 @@ class App(tkinter.Tk):
         self.settings_frame.place_forget()
         self.main_frame.place(relx=0, rely=0, relheight=1, relwidth=1)
 
-    def manage_usage_stats(self, open_times, id):
-        if Settings.COMPILED_APP_MODE:
+#    def manage_usage_stats(self, open_times, id):
+#        if Settings.COMPILED_APP_MODE:
 
-            # check usage_monitor module could be loaded
-            if usage_monitor is not None:
+#            # check usage_monitor module could be loaded
+#            if usage_monitor is not None:
 
-                # check if user agreed on usage statistics
-                if self.read_user_setting("agreed_on_usage_stats") is True:
+#                # check if user agreed on usage statistics
+#                if self.read_user_setting("agreed_on_usage_stats") is True:
 
-                    # send log message with option and open_times data
-                    usage_monitor.UsageMonitor.new_log_msg(open_times, id)
-                else:
-                    # open dialog to ask for usage statistics permission
-                    answer = tkinter.messagebox.askyesno(title=Settings.APP_NAME,
-                                                         message=Settings.STATISTICS_AGREEMENT)
-                    if answer is True:
-                        # save user permission
-                        self.write_user_setting("agreed_on_usage_stats", True)
+#                    # send log message with option and open_times data
+#                    usage_monitor.UsageMonitor.new_log_msg(open_times, id)
+#                else:
+#                    # open dialog to ask for usage statistics permission
+#                    answer = tkinter.messagebox.askyesno(title=Settings.APP_NAME,
+#                                                         message=Settings.STATISTICS_AGREEMENT)
+#                    if answer is True:
+#                        # save user permission
+#                        self.write_user_setting("agreed_on_usage_stats", True)
 
-                        # send log message with option and open_times data
-                        usage_monitor.UsageMonitor.new_log_msg(open_times, id)
-                    else:
-                        # close program if user doesnt agree
-                        self.on_closing()
+#                        # send log message with option and open_times data
+#                        usage_monitor.UsageMonitor.new_log_msg(open_times, id)
+#                    else:
+#                        # close program if user doesnt agree
+#                        self.on_closing()
 
     def check_for_updates(self):
         # check if user agreed on update checking
@@ -214,10 +214,10 @@ class App(tkinter.Tk):
     def start(self):
         self.handle_appearance_mode_change()
 
-        # handle new usage statistics when program is started
-        if self.read_user_setting("id") is None: self.write_user_setting("id", random.randint(10**20, (10**21)-1))  # generate random id
-        self.write_user_setting("open_times", self.read_user_setting("open_times")+1)  # increase open_times counter
-        self.manage_usage_stats(self.read_user_setting("open_times"), self.read_user_setting("id"))  # send open_times value and id
+#        # handle new usage statistics when program is started
+#        if self.read_user_setting("id") is None: self.write_user_setting("id", random.randint(10**20, (10**21)-1))  # generate random id
+#        self.write_user_setting("open_times", self.read_user_setting("open_times")+1)  # increase open_times counter
+#        self.manage_usage_stats(self.read_user_setting("open_times"), self.read_user_setting("id"))  # send open_times value and id
 
         while self.audio_analyzer.running:
 
@@ -301,3 +301,4 @@ class App(tkinter.Tk):
 if __name__ == "__main__":
     app = App()
     app.start()
+
